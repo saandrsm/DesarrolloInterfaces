@@ -6,6 +6,7 @@ package gui;
 
 import javax.swing.table.DefaultTableModel;
 import datos.Usuario;
+import gui.tablemodels.UsuariosTableModel;
 import java.util.List;
 import logica.logicaUsuarios;
 
@@ -14,7 +15,7 @@ import logica.logicaUsuarios;
  * @author solet
  */
 public class PantallaPerfil extends javax.swing.JDialog {
-
+    
     /**
      * Creates new form PantallaPerfil
      */
@@ -30,12 +31,17 @@ public class PantallaPerfil extends javax.swing.JDialog {
     }
     private void refrescarTabla(){
         DefaultTableModel dtm = new DefaultTableModel();
+        //UsuariosTableModel utm = new UsuariosTableModel(logicaUsuarios.getListaUsuarios());
         dtm.setColumnIdentifiers(new String[]{"Nombre", "Apellidos", "Provincia", "Fecha Nacimiento"});
         List<Usuario> listaUsuarios = logicaUsuarios.getListaUsuarios();
         for (Usuario usuario : listaUsuarios){
-            dtm.addRow(usuario.toArrayString());
-        }
+           dtm.addRow(usuario.toArrayString());
+       }
+//        for (Usuario usuario : listaUsuarios){
+//            utm.addRow(usuario.toArrayString());
+//        }
         jTablePerfiles.setModel(dtm);
+        //jTablePerfiles.setModel(new UsuariosTableModel(logicaUsuarios.getListaUsuarios()));
     }
 //    public void aniadirPerfil(Usuario usuario){
 //        DefaultTableModel dtm = (DefaultTableModel)jTablePerfiles.getModel();
@@ -92,8 +98,8 @@ public class PantallaPerfil extends javax.swing.JDialog {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 375, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(19, Short.MAX_VALUE))
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 603, Short.MAX_VALUE)
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
