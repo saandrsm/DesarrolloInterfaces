@@ -3,7 +3,13 @@ package gui;
 
 import java.util.Date;
 import datos.Usuario;
+import javax.swing.JOptionPane;
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
 import logica.logicaUsuarios;
+import org.netbeans.validation.api.builtin.stringvalidation.MayusculasValidacion;
+import org.netbeans.validation.api.builtin.stringvalidation.StringValidators;
+import org.netbeans.validation.api.ui.ValidationGroup;
 
 /**
  *
@@ -17,6 +23,34 @@ public class PantallaRegistro extends javax.swing.JDialog {
         PantallaPerfil pantallaPerfil = new PantallaPerfil();
         menuPrincipal = (MenuPrincipal) parent;
         initComponents();
+        jButtonAceptar.setEnabled(false);
+        ValidationGroup group = validationPanel.getValidationGroup();
+        group.add(jTextFieldNombre, StringValidators.REQUIRE_NON_EMPTY_STRING, new MayusculasValidacion());
+        group.add(jTextFieldApellidos, StringValidators.REQUIRE_NON_EMPTY_STRING);
+        
+        validationPanel.addChangeListener(new ChangeListener() {
+            @Override
+            public void stateChanged(ChangeEvent e) {
+                if (validationPanel.getProblem()== null)
+                    jButtonAceptar.setEnabled(true);
+                else
+                    jButtonAceptar.setEnabled(false);
+            }
+        });
+    }
+    
+    private boolean validarFormulario(){
+        String nombre= jTextFieldNombre.getText();
+        if(nombre==null || "".equals(nombre)){
+            JOptionPane.showMessageDialog(this, "El campo no puede estar vacío", "Error", JOptionPane.ERROR_MESSAGE);
+            return false;
+        }
+        String apellidos= jTextFieldApellidos.getText();
+        if(apellidos==null || "".equals(apellidos)){
+            JOptionPane.showMessageDialog(this, "El campo apellido no puede estar vacío", "Error", JOptionPane.ERROR_MESSAGE);
+            return false;
+        }
+        return true;
     }
 
     /**
@@ -40,6 +74,7 @@ public class PantallaRegistro extends javax.swing.JDialog {
         jLabelFechaNac = new javax.swing.JLabel();
         jSpinnerFechaNac = new javax.swing.JSpinner();
         jComboBoxProvincias = new javax.swing.JComboBox<>();
+        validationPanel = new org.netbeans.validation.api.ui.swing.ValidationPanel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
@@ -52,6 +87,7 @@ public class PantallaRegistro extends javax.swing.JDialog {
 
         jLabelNombre.setText("Nombre:");
 
+        jTextFieldNombre.setName("Nombre"); // NOI18N
         jTextFieldNombre.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jTextFieldNombreActionPerformed(evt);
@@ -86,17 +122,6 @@ public class PantallaRegistro extends javax.swing.JDialog {
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(jButtonVolver))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(126, 126, 126)
-                        .addComponent(jLabelNombreGuardado, javax.swing.GroupLayout.PREFERRED_SIZE, 134, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(jButtonAceptar)))
-                .addGap(272, 272, 272))
-            .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGap(37, 37, 37)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
@@ -116,18 +141,33 @@ public class PantallaRegistro extends javax.swing.JDialog {
                             .addComponent(jTextFieldApellidos)
                             .addComponent(jComboBoxProvincias, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
                 .addGap(30, 30, 30))
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(126, 126, 126)
+                        .addComponent(jLabelNombreGuardado, javax.swing.GroupLayout.PREFERRED_SIZE, 134, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(jButtonAceptar))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(jButtonVolver)
+                        .addGap(61, 61, 61)
+                        .addComponent(validationPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 447, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(44, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(0, 0, 0)
-                        .addComponent(jButtonAceptar))
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(jButtonVolver)
-                        .addGap(25, 25, 25)
+                        .addGap(25, 25, 25))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                        .addComponent(validationPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)))
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jTextFieldNombre, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jLabelNombre))
@@ -144,7 +184,8 @@ public class PantallaRegistro extends javax.swing.JDialog {
                             .addComponent(jLabelFechaNac)
                             .addComponent(jSpinnerFechaNac, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(17, 17, 17)
-                        .addComponent(jLabelNombreGuardado, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(jLabelNombreGuardado, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jButtonAceptar, javax.swing.GroupLayout.Alignment.TRAILING))
                 .addGap(42, 42, 42))
         );
 
@@ -173,16 +214,22 @@ public class PantallaRegistro extends javax.swing.JDialog {
     }//GEN-LAST:event_jTextFieldApellidosActionPerformed
 
     private void jButtonAceptarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonAceptarActionPerformed
-        String nombre = jTextFieldNombre.getText();
-        menuPrincipal.establecerNombre(nombre);
-        //mostrarValidacion();
+      String nombre = jTextFieldNombre.getText();
+      //mostrarValidacion();
       //PantallaPerfil pantallaPerfil = new PantallaPerfil(this, true);
       //pantallaPerfil.setVisible(true);
       String Apellidos = jTextFieldApellidos.getText();
       String Provincia = (String)jComboBoxProvincias.getSelectedItem();
       Date FechaNac = (Date)jSpinnerFechaNac.getValue();
       Usuario usuario = new Usuario(nombre, Apellidos, Provincia, FechaNac);
+      setVisible(false);
       logicaUsuarios.aniadirUsuario(usuario);
+      menuPrincipal.establecerNombre(nombre);
+//      if(validarFormulario()){
+//          setVisible(false);
+//          logicaUsuarios.aniadirUsuario(usuario);
+//          menuPrincipal.establecerNombre(nombre);
+//      }
     }//GEN-LAST:event_jButtonAceptarActionPerformed
 
     private void jTextFieldNombreActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextFieldNombreActionPerformed
@@ -251,5 +298,6 @@ public class PantallaRegistro extends javax.swing.JDialog {
     private javax.swing.JSpinner jSpinnerFechaNac;
     private javax.swing.JTextField jTextFieldApellidos;
     private javax.swing.JTextField jTextFieldNombre;
+    private org.netbeans.validation.api.ui.swing.ValidationPanel validationPanel;
     // End of variables declaration//GEN-END:variables
 }

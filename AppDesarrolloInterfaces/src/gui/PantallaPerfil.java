@@ -7,7 +7,11 @@ package gui;
 import javax.swing.table.DefaultTableModel;
 import datos.Usuario;
 import gui.tablemodels.UsuariosTableModel;
+import java.util.ArrayList;
 import java.util.List;
+import javax.swing.RowSorter.SortKey;
+import javax.swing.SortOrder;
+import javax.swing.table.TableRowSorter;
 import logica.logicaUsuarios;
 
 /**
@@ -41,6 +45,14 @@ public class PantallaPerfil extends javax.swing.JDialog {
 //            utm.addRow(usuario.toArrayString());
 //        }
         jTablePerfiles.setModel(dtm);
+        TableRowSorter<DefaultTableModel> sorter = new TableRowSorter<>(dtm);
+        jTablePerfiles.setRowSorter(sorter);
+        
+        List<SortKey> sortKeys = new ArrayList<>();
+        sortKeys.add(new SortKey(0,SortOrder.ASCENDING));
+        sorter.setSortKeys(sortKeys);
+        
+        
         //jTablePerfiles.setModel(new UsuariosTableModel(logicaUsuarios.getListaUsuarios()));
     }
 //    public void aniadirPerfil(Usuario usuario){
@@ -59,6 +71,8 @@ public class PantallaPerfil extends javax.swing.JDialog {
 
         jScrollPane1 = new javax.swing.JScrollPane();
         jTablePerfiles = new javax.swing.JTable();
+        jLabelSeleccionado = new javax.swing.JLabel();
+        jButtonBorrar = new javax.swing.JButton();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenuPerfil = new javax.swing.JMenu();
         jMenuItemEditarPerfil = new javax.swing.JMenuItem();
@@ -77,6 +91,13 @@ public class PantallaPerfil extends javax.swing.JDialog {
             }
         ));
         jScrollPane1.setViewportView(jTablePerfiles);
+
+        jButtonBorrar.setText("Borrar usuario");
+        jButtonBorrar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonBorrarActionPerformed(evt);
+            }
+        });
 
         jMenuPerfil.setText("Tu perfil");
 
@@ -100,13 +121,23 @@ public class PantallaPerfil extends javax.swing.JDialog {
                 .addContainerGap()
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 603, Short.MAX_VALUE)
                 .addContainerGap())
+            .addGroup(layout.createSequentialGroup()
+                .addGap(72, 72, 72)
+                .addComponent(jButtonBorrar)
+                .addGap(18, 18, 18)
+                .addComponent(jLabelSeleccionado, javax.swing.GroupLayout.PREFERRED_SIZE, 92, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 210, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(71, Short.MAX_VALUE))
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 118, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(27, 27, 27)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabelSeleccionado)
+                    .addComponent(jButtonBorrar))
+                .addContainerGap(112, Short.MAX_VALUE))
         );
 
         pack();
@@ -117,6 +148,12 @@ public class PantallaPerfil extends javax.swing.JDialog {
         //pantallaRegistro.setVisible(true);
         //refrescarTabla();
     }//GEN-LAST:event_jMenuItemEditarPerfilActionPerformed
+
+    private void jButtonBorrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonBorrarActionPerformed
+        int seleccionado = jTablePerfiles.convertRowIndexToModel(jTablePerfiles.getSelectedRow());
+        jLabelSeleccionado.setText(logicaUsuarios.getListaUsuarios().get(seleccionado).getNombre());
+        jTablePerfiles.remove(seleccionado);
+    }//GEN-LAST:event_jButtonBorrarActionPerformed
 
     /**
      * @param args the command line arguments
@@ -161,6 +198,8 @@ public class PantallaPerfil extends javax.swing.JDialog {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton jButtonBorrar;
+    private javax.swing.JLabel jLabelSeleccionado;
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JMenuItem jMenuItemEditarPerfil;
     private javax.swing.JMenu jMenuPerfil;
