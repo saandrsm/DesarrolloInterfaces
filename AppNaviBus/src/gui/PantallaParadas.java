@@ -1,7 +1,4 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JDialog.java to edit this template
- */
+
 package gui;
 
 import datos.Parada;
@@ -15,6 +12,7 @@ import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableRowSorter;
 import logica.logicaParadas;
 
+
 /**
  *
  * @author solet
@@ -27,6 +25,12 @@ public class PantallaParadas extends javax.swing.JDialog {
     public PantallaParadas(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
+        refrescarTabla();
+        int count= jTableParadas.getModel().getRowCount();
+        if (count!=0){
+            jButtonCargar.setVisible(false);
+        }
+        
     }
 
     /**
@@ -43,6 +47,9 @@ public class PantallaParadas extends javax.swing.JDialog {
         jTableParadas = new javax.swing.JTable();
         jTextFieldBuscador = new javax.swing.JTextField();
         jButtonBuscar = new javax.swing.JButton();
+        jButtonCargar = new javax.swing.JButton();
+        jButtonSeleccionada = new javax.swing.JButton();
+        jLabelSeleccionado = new javax.swing.JLabel();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenuParadas = new javax.swing.JMenu();
         jMenuItemAñadirParada = new javax.swing.JMenuItem();
@@ -51,13 +58,13 @@ public class PantallaParadas extends javax.swing.JDialog {
 
         jTableParadas.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
+                {null, null},
+                {null, null},
+                {null, null},
+                {null, null}
             },
             new String [] {
-                "Title 1", "Title 2", "Title 3", "Title 4"
+                "Parada", "Número de parada"
             }
         ));
         jScrollPane1.setViewportView(jTableParadas);
@@ -69,6 +76,20 @@ public class PantallaParadas extends javax.swing.JDialog {
             }
         });
 
+        jButtonCargar.setText("Cargar paradas cercanas");
+        jButtonCargar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonCargarActionPerformed(evt);
+            }
+        });
+
+        jButtonSeleccionada.setText("Parada seleccionada:");
+        jButtonSeleccionada.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonSeleccionadaActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -76,13 +97,22 @@ public class PantallaParadas extends javax.swing.JDialog {
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(152, 152, 152)
+                        .addContainerGap(152, Short.MAX_VALUE)
                         .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 299, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(228, 228, 228)
+                        .addComponent(jButtonCargar))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(168, 168, 168)
-                        .addComponent(jTextFieldBuscador, javax.swing.GroupLayout.PREFERRED_SIZE, 183, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jButtonBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 76, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addComponent(jButtonSeleccionada)
+                                .addGap(18, 18, 18)
+                                .addComponent(jLabelSeleccionado, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addComponent(jTextFieldBuscador, javax.swing.GroupLayout.PREFERRED_SIZE, 183, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jButtonBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 76, javax.swing.GroupLayout.PREFERRED_SIZE)))))
                 .addContainerGap(167, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
@@ -92,12 +122,18 @@ public class PantallaParadas extends javax.swing.JDialog {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jTextFieldBuscador, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jButtonBuscar))
-                .addGap(35, 35, 35)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 293, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(41, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jButtonSeleccionada)
+                    .addComponent(jLabelSeleccionado, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 5, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 247, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, Short.MAX_VALUE)
+                .addComponent(jButtonCargar)
+                .addContainerGap(45, Short.MAX_VALUE))
         );
 
-        jMenuParadas.setText("Paradas Cercanas");
+        jMenuParadas.setText("Paradas");
 
         jMenuItemAñadirParada.setText("Añadir Parada");
         jMenuItemAñadirParada.addActionListener(new java.awt.event.ActionListener() {
@@ -137,34 +173,40 @@ public class PantallaParadas extends javax.swing.JDialog {
     }//GEN-LAST:event_jButtonBuscarActionPerformed
 
     
-    private void refrescarTabla(){
+    private void refrescarTabla(){                                     //el método refrescar tabla es para añadir las paradas en la tabla con su correspondiente modelo de tabla
         DefaultTableModel dtm = new DefaultTableModel();
-        //UsuariosTableModel utm = new UsuariosTableModel(logicaUsuarios.getListaUsuarios());
-        dtm.setColumnIdentifiers(new String[]{"Nombre", "Numero de Parada"});
+        dtm.setColumnIdentifiers(new String[]{"Parada", "Número de parada"});   //aquí defino el modelo por defecto de la tabla
         List<Parada> listaParadas = logicaParadas.getListaParadas();
         for (Parada parada : listaParadas){
            dtm.addRow(parada.toArrayString());
        }
-//        for (Usuario usuario : listaUsuarios){
-//            utm.addRow(usuario.toArrayString());
-//        }
         jTableParadas.setModel(dtm);
         sorter = new TableRowSorter<>(dtm);
-        jTableParadas.setRowSorter(sorter);
-        
+        jTableParadas.setRowSorter(sorter);                 
         List<RowSorter.SortKey> sortKeys = new ArrayList<>();
-        sortKeys.add(new RowSorter.SortKey(0,SortOrder.ASCENDING));
+        sortKeys.add(new RowSorter.SortKey(0,SortOrder.ASCENDING));      //aquí ordenamos las filas en sentido ascendente
         sorter.setSortKeys(sortKeys);
-        
-        
-        
-        //jTablePerfiles.setModel(new UsuariosTableModel(logicaUsuarios.getListaUsuarios()));
     }
     private void jMenuItemAñadirParadaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemAñadirParadaActionPerformed
         PantallaFormParadas pfp = new PantallaFormParadas(null, true);
         pfp.setVisible(true);
         refrescarTabla();
     }//GEN-LAST:event_jMenuItemAñadirParadaActionPerformed
+
+    private void jButtonCargarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonCargarActionPerformed
+        logicaParadas.cargarParada();
+        refrescarTabla();             //con este botón cargamos las paradas por defecto, cuenta que haya más de 0 filas para que no pueda volverse a pulsar y las duplique
+        int count= jTableParadas.getModel().getRowCount();
+        if (count!=0){
+            jButtonCargar.setVisible(false);
+        }
+        
+    }//GEN-LAST:event_jButtonCargarActionPerformed
+
+    private void jButtonSeleccionadaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonSeleccionadaActionPerformed
+        int seleccionado = jTableParadas.convertRowIndexToModel(jTableParadas.getSelectedRow());
+        jLabelSeleccionado.setText(logicaParadas.getListaParadas().get(seleccionado).getNombre());
+    }//GEN-LAST:event_jButtonSeleccionadaActionPerformed
 
     /**
      * @param args the command line arguments
@@ -210,6 +252,9 @@ public class PantallaParadas extends javax.swing.JDialog {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButtonBuscar;
+    private javax.swing.JButton jButtonCargar;
+    private javax.swing.JButton jButtonSeleccionada;
+    private javax.swing.JLabel jLabelSeleccionado;
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JMenuItem jMenuItemAñadirParada;
     private javax.swing.JMenu jMenuParadas;

@@ -1,13 +1,11 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JDialog.java to edit this template
- */
-package gui;
 
+package gui;
 
 import datos.Usuario;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 import javax.swing.JSpinner;
 import javax.swing.SpinnerDateModel;
 import logica.logicaUsuario;
@@ -23,6 +21,26 @@ public class PantallaDatos extends javax.swing.JDialog {
     public PantallaDatos(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
+        Usuario usuario = null;
+        List<Usuario> listaUsuarios = logicaUsuario.getListaUsuarios();       //recorro la lista, hago getters y setters para coger los datos introducidos
+        for(Usuario x:listaUsuarios){                                         //en la pantalla registro y mostrarlos aquí en datos
+            usuario = x;
+        }
+        String nombre = usuario.getNombre();
+        String apellido = usuario.getApellido();
+        Object provincia = (Object)usuario.getProvincia();
+        Object genero = (Object)usuario.getGenero();
+        Object fecha = (Object)usuario.getFechaNac();
+        jTextFieldNombre.setText(nombre);
+        jTextFieldApellido.setText(apellido);
+        jComboBoxProvincia.setSelectedItem(provincia);
+        jComboBoxGenero.setSelectedItem(genero);
+        jSpinnerFecha.setValue(fecha);
+        jTextFieldNombre.setEditable(false);
+        jTextFieldApellido.setEditable(false);
+        jComboBoxProvincia.setEnabled(false);
+        jComboBoxGenero.setEnabled(false);
+        jSpinnerFecha.setEnabled(false);
     }
 
     /**
@@ -34,7 +52,7 @@ public class PantallaDatos extends javax.swing.JDialog {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jTextFieldNombre = new javax.swing.JTextField();
+        jPanel1 = new javax.swing.JPanel();
         jTextFieldApellido = new javax.swing.JTextField();
         jSpinnerFecha = new javax.swing.JSpinner();
         jComboBoxProvincia = new javax.swing.JComboBox<>();
@@ -44,28 +62,12 @@ public class PantallaDatos extends javax.swing.JDialog {
         jLabelProvincia = new javax.swing.JLabel();
         jLabelGenero = new javax.swing.JLabel();
         jLabelfecha = new javax.swing.JLabel();
-        jToggleButtonEditarNombre = new javax.swing.JToggleButton();
-        jToggleButtonEditarApellido = new javax.swing.JToggleButton();
-        jToggleButtonEditarProvincia = new javax.swing.JToggleButton();
-        jToggleButtonEditarGenero = new javax.swing.JToggleButton();
-        jToggleButtonEditarFecha = new javax.swing.JToggleButton();
+        jToggleButtonEditar = new javax.swing.JToggleButton();
+        jTextFieldNombre = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setBackground(new java.awt.Color(255, 255, 255));
 
-        PantallaRegistro pantallaRegistro = new PantallaRegistro(null, true);
-        String Nombre = pantallaRegistro.getNombre();
-        jTextFieldNombre.setText(Nombre);
-        jTextFieldNombre.setEditable(false);
-        jTextFieldNombre.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextFieldNombreActionPerformed(evt);
-            }
-        });
-
-        pantallaRegistro = new PantallaRegistro(null, true);
-        String Apellido = pantallaRegistro.getApellido();
-        jTextFieldApellido.setText(Apellido);
-        jTextFieldApellido.setEditable(false);
         jTextFieldApellido.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jTextFieldApellidoActionPerformed(evt);
@@ -79,9 +81,6 @@ public class PantallaDatos extends javax.swing.JDialog {
         */
 
         jComboBoxProvincia.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "A Coruña", "Álava", "Albacete", "Alicante", "Almería", "Asturias", "Ávila", "Badajoz", "Baleares", "Barcelona", "Burgos", "Cáceres", "Cádiz", "Cantabria", "Castellón", "Ciudad Real", "Córdoba", "Cuenca", "Girona", "Granada", "Guadalajara", "Gipuzkoa", "Huelva", "Huesca", "Jaén", "La Rioja", "Las Palmas", "León", "Lérida", "Lugo", "Madrid", "Málaga", "Murcia", "Navarra", "Ourense", "Palencia", "Pontevedra", "Salamanca", "Segovia", "Sevilla", "Soria", "Tarragona", "Santa Cruz de Tenerife", "Teruel", "Toledo", "Valencia", "Valladolid", "Vizcaya", "Zamora", "Zaragoza" }));
-        Object Provincia = pantallaRegistro.getProvincia();
-        jComboBoxProvincia.setSelectedItem(Provincia);
-        jComboBoxProvincia.setEnabled(false);
         jComboBoxProvincia.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jComboBoxProvinciaActionPerformed(evt);
@@ -89,9 +88,6 @@ public class PantallaDatos extends javax.swing.JDialog {
         });
 
         jComboBoxGenero.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Masculino", "Femenino", "No binario", "Otro" }));
-        Object Genero = pantallaRegistro.getGenero();
-        jComboBoxGenero.setSelectedItem(Genero);
-        jComboBoxGenero.setEnabled(false);
         jComboBoxGenero.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jComboBoxGeneroActionPerformed(evt);
@@ -108,176 +104,144 @@ public class PantallaDatos extends javax.swing.JDialog {
 
         jLabelfecha.setText("Fecha de nacimiento:");
 
-        jToggleButtonEditarNombre.setText("Editar");
-        jToggleButtonEditarNombre.addActionListener(new java.awt.event.ActionListener() {
+        jToggleButtonEditar.setText("Editar");
+        jToggleButtonEditar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jToggleButtonEditarNombreActionPerformed(evt);
+                jToggleButtonEditarActionPerformed(evt);
             }
         });
 
-        jToggleButtonEditarApellido.setText("Editar");
-        jToggleButtonEditarApellido.addActionListener(new java.awt.event.ActionListener() {
+        jTextFieldNombre.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jToggleButtonEditarApellidoActionPerformed(evt);
+                jTextFieldNombreActionPerformed(evt);
             }
         });
 
-        jToggleButtonEditarProvincia.setText("Editar");
-        jToggleButtonEditarProvincia.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jToggleButtonEditarProvinciaActionPerformed(evt);
-            }
-        });
-
-        jToggleButtonEditarGenero.setText("Editar");
-        jToggleButtonEditarGenero.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jToggleButtonEditarGeneroActionPerformed(evt);
-            }
-        });
-
-        jToggleButtonEditarFecha.setText("Editar");
-        jToggleButtonEditarFecha.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jToggleButtonEditarFechaActionPerformed(evt);
-            }
-        });
+        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
+        jPanel1.setLayout(jPanel1Layout);
+        jPanel1Layout.setHorizontalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                .addContainerGap(74, Short.MAX_VALUE)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(jLabelfecha)
+                        .addGap(18, 18, 18)
+                        .addComponent(jSpinnerFecha, javax.swing.GroupLayout.PREFERRED_SIZE, 276, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(jLabelNombre)
+                        .addGap(18, 18, 18)
+                        .addComponent(jTextFieldNombre))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                                    .addComponent(jLabelApellido)
+                                    .addGap(18, 18, 18))
+                                .addGroup(jPanel1Layout.createSequentialGroup()
+                                    .addComponent(jLabelProvincia)
+                                    .addGap(12, 12, 12)))
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addComponent(jLabelGenero)
+                                .addGap(21, 21, 21)))
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(jComboBoxGenero, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jComboBoxProvincia, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jTextFieldApellido, javax.swing.GroupLayout.PREFERRED_SIZE, 347, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                .addContainerGap(132, Short.MAX_VALUE))
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGap(267, 267, 267)
+                .addComponent(jToggleButtonEditar)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+        jPanel1Layout.setVerticalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGap(71, 71, 71)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jTextFieldNombre, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabelNombre))
+                .addGap(27, 27, 27)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jTextFieldApellido, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabelApellido))
+                .addGap(31, 31, 31)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jComboBoxProvincia, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabelProvincia))
+                .addGap(30, 30, 30)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jComboBoxGenero, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabelGenero))
+                .addGap(37, 37, 37)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jSpinnerFecha, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabelfecha))
+                .addGap(18, 18, 18)
+                .addComponent(jToggleButtonEditar)
+                .addContainerGap(28, Short.MAX_VALUE))
+        );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(81, 81, 81)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(jLabelfecha)
-                        .addGap(18, 18, 18)
-                        .addComponent(jSpinnerFecha, javax.swing.GroupLayout.PREFERRED_SIZE, 276, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(jLabelNombre)
-                        .addGap(18, 18, 18)
-                        .addComponent(jTextFieldNombre))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                                    .addComponent(jLabelApellido)
-                                    .addGap(18, 18, 18))
-                                .addGroup(layout.createSequentialGroup()
-                                    .addComponent(jLabelProvincia)
-                                    .addGap(12, 12, 12)))
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(jLabelGenero)
-                                .addGap(21, 21, 21)))
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(jComboBoxGenero, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jComboBoxProvincia, 0, 347, Short.MAX_VALUE)
-                            .addComponent(jTextFieldApellido))))
-                .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jToggleButtonEditarNombre)
-                    .addComponent(jToggleButtonEditarApellido)
-                    .addComponent(jToggleButtonEditarProvincia)
-                    .addComponent(jToggleButtonEditarGenero)
-                    .addComponent(jToggleButtonEditarFecha))
-                .addContainerGap(75, Short.MAX_VALUE))
+                .addContainerGap()
+                .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(98, 98, 98)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jTextFieldNombre, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabelNombre)
-                    .addComponent(jToggleButtonEditarNombre))
-                .addGap(27, 27, 27)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jTextFieldApellido, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabelApellido)
-                    .addComponent(jToggleButtonEditarApellido))
-                .addGap(31, 31, 31)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jComboBoxProvincia, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabelProvincia)
-                    .addComponent(jToggleButtonEditarProvincia))
-                .addGap(30, 30, 30)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jComboBoxGenero, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabelGenero)
-                    .addComponent(jToggleButtonEditarGenero))
-                .addGap(37, 37, 37)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jSpinnerFecha, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabelfecha)
-                    .addComponent(jToggleButtonEditarFecha))
-                .addContainerGap(96, Short.MAX_VALUE))
+                .addContainerGap()
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
-
-        pantallaRegistro = new PantallaRegistro(null, true);
-        Object Fecha = pantallaRegistro.getFecha();
-        jSpinnerFecha.setValue(Fecha);
-        jSpinnerFecha.setEnabled(false);
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-
-    private void jTextFieldNombreActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextFieldNombreActionPerformed
-        
-    }//GEN-LAST:event_jTextFieldNombreActionPerformed
 
     private void jTextFieldApellidoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextFieldApellidoActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jTextFieldApellidoActionPerformed
 
-    private void jToggleButtonEditarNombreActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jToggleButtonEditarNombreActionPerformed
-        if(jToggleButtonEditarNombre.isSelected()){
-            jTextFieldNombre.setEditable(true);
-        }else{
-            jTextFieldNombre.setEditable(false);
-        }
-    }//GEN-LAST:event_jToggleButtonEditarNombreActionPerformed
-
-    private void jToggleButtonEditarApellidoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jToggleButtonEditarApellidoActionPerformed
-        if(jToggleButtonEditarApellido.isSelected()){
+    private void jToggleButtonEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jToggleButtonEditarActionPerformed
+        if(jToggleButtonEditar.isSelected()){          //si el botón editar es seleccionado, el formulario pasa a ser editable
+            jTextFieldNombre.setEditable(true);         //para que se puedan cambiar los datos del usuario
             jTextFieldApellido.setEditable(true);
+            jComboBoxProvincia.setEnabled(true);
+            jComboBoxGenero.setEnabled(true);
+            jSpinnerFecha.setEnabled(true);
+            
         }else{
+            logicaUsuario.borrarUsuario(0);                  //cuando deja de ser seleccionado borra los datos antiguos, guarda los nuevos
+            String nombre = jTextFieldNombre.getText();      //y vuelve a dejar el formulario no editable
+            String apellido = jTextFieldApellido.getText();
+            String provincia = (String)jComboBoxProvincia.getSelectedItem();
+            String genero = (String)jComboBoxGenero.getSelectedItem();
+            Date fecha = (Date)jSpinnerFecha.getValue();
+            Usuario usuario = new Usuario(nombre, apellido, provincia, genero, fecha);
+            logicaUsuario.guardarUsuario(usuario);
+            jTextFieldNombre.setEditable(false);
             jTextFieldApellido.setEditable(false);
+            jComboBoxProvincia.setEnabled(false);
+            jComboBoxGenero.setEnabled(false);
+            jSpinnerFecha.setEnabled(false);
         }
-    }//GEN-LAST:event_jToggleButtonEditarApellidoActionPerformed
+    }//GEN-LAST:event_jToggleButtonEditarActionPerformed
 
     private void jComboBoxProvinciaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBoxProvinciaActionPerformed
-        
+
     }//GEN-LAST:event_jComboBoxProvinciaActionPerformed
 
     private void jComboBoxGeneroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBoxGeneroActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jComboBoxGeneroActionPerformed
 
-    private void jToggleButtonEditarProvinciaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jToggleButtonEditarProvinciaActionPerformed
-        if(jToggleButtonEditarProvincia.isSelected()){
-            jComboBoxProvincia.setEnabled(true);
-        }else{
-            jComboBoxProvincia.setEnabled(false);
-        }
-    }//GEN-LAST:event_jToggleButtonEditarProvinciaActionPerformed
+    private void jTextFieldNombreActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextFieldNombreActionPerformed
 
-    private void jToggleButtonEditarGeneroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jToggleButtonEditarGeneroActionPerformed
-        if(jToggleButtonEditarGenero.isSelected()){
-            jComboBoxGenero.setEnabled(true);
-        }else{
-            jComboBoxGenero.setEnabled(false);
-        }
-    }//GEN-LAST:event_jToggleButtonEditarGeneroActionPerformed
-
-    private void jToggleButtonEditarFechaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jToggleButtonEditarFechaActionPerformed
-        if(jToggleButtonEditarFecha.isSelected()){
-            jSpinnerFecha.setEnabled(true);
-        }else{
-            jSpinnerFecha.setEnabled(false);
-        }
-
-    }//GEN-LAST:event_jToggleButtonEditarFechaActionPerformed
+    }//GEN-LAST:event_jTextFieldNombreActionPerformed
 
     /**
      * @param args the command line arguments
@@ -329,13 +293,10 @@ public class PantallaDatos extends javax.swing.JDialog {
     private javax.swing.JLabel jLabelNombre;
     private javax.swing.JLabel jLabelProvincia;
     private javax.swing.JLabel jLabelfecha;
+    private javax.swing.JPanel jPanel1;
     private javax.swing.JSpinner jSpinnerFecha;
     private javax.swing.JTextField jTextFieldApellido;
     private javax.swing.JTextField jTextFieldNombre;
-    private javax.swing.JToggleButton jToggleButtonEditarApellido;
-    private javax.swing.JToggleButton jToggleButtonEditarFecha;
-    private javax.swing.JToggleButton jToggleButtonEditarGenero;
-    private javax.swing.JToggleButton jToggleButtonEditarNombre;
-    private javax.swing.JToggleButton jToggleButtonEditarProvincia;
+    private javax.swing.JToggleButton jToggleButtonEditar;
     // End of variables declaration//GEN-END:variables
 }

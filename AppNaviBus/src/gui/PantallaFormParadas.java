@@ -1,10 +1,8 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JDialog.java to edit this template
- */
+
 package gui;
 
 import datos.Parada;
+import javax.swing.JOptionPane;
 import logica.logicaParadas;
 
 /**
@@ -20,6 +18,21 @@ public class PantallaFormParadas extends javax.swing.JDialog {
         super(parent, modal);
         initComponents();
     }
+    
+    private boolean validarFormulario() {    //un validador manual que comprueba si los campos están vacíos y/o sin se introducen números enteros
+        String parada = jTextFieldNombreParada.getText();
+        if (parada == null || "".equals(parada)) {
+            JOptionPane.showMessageDialog(this, "El nombre de la parada no puede estar vacío", "Error", JOptionPane.ERROR_MESSAGE);
+            return false;
+        }
+        try {
+            Integer.parseInt(jTextFieldNumParada.getText());
+        } catch (NumberFormatException n) {
+            JOptionPane.showMessageDialog(this, "El número de la parada debe ser un número", "Error", JOptionPane.ERROR_MESSAGE);
+            return false;
+        }
+        return true;
+    }
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -31,20 +44,44 @@ public class PantallaFormParadas extends javax.swing.JDialog {
     private void initComponents() {
 
         jLabelNombreParada = new javax.swing.JLabel();
-        jLabelNumParada = new javax.swing.JLabel();
         jTextFieldNombreParada = new javax.swing.JTextField();
+        jLabelNumParada = new javax.swing.JLabel();
         jTextFieldNumParada = new javax.swing.JTextField();
+        jPanel1 = new javax.swing.JPanel();
         jButtonAniadirParada = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        getContentPane().setLayout(new java.awt.GridLayout());
 
         jLabelNombreParada.setText(org.openide.util.NbBundle.getMessage(PantallaFormParadas.class, "PantallaFormParadas.jLabelNombreParada.text")); // NOI18N
-
-        jLabelNumParada.setText(org.openide.util.NbBundle.getMessage(PantallaFormParadas.class, "PantallaFormParadas.jLabelNumParada.text")); // NOI18N
+        getContentPane().add(jLabelNombreParada);
 
         jTextFieldNombreParada.setText(org.openide.util.NbBundle.getMessage(PantallaFormParadas.class, "PantallaFormParadas.jTextFieldNombreParada.text")); // NOI18N
+        jTextFieldNombreParada.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jTextFieldNombreParadaActionPerformed(evt);
+            }
+        });
+        getContentPane().add(jTextFieldNombreParada);
+
+        jLabelNumParada.setText(org.openide.util.NbBundle.getMessage(PantallaFormParadas.class, "PantallaFormParadas.jLabelNumParada.text")); // NOI18N
+        getContentPane().add(jLabelNumParada);
 
         jTextFieldNumParada.setText(org.openide.util.NbBundle.getMessage(PantallaFormParadas.class, "PantallaFormParadas.jTextFieldNumParada.text")); // NOI18N
+        getContentPane().add(jTextFieldNumParada);
+
+        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
+        jPanel1.setLayout(jPanel1Layout);
+        jPanel1Layout.setHorizontalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 134, Short.MAX_VALUE)
+        );
+        jPanel1Layout.setVerticalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 37, Short.MAX_VALUE)
+        );
+
+        getContentPane().add(jPanel1);
 
         jButtonAniadirParada.setText(org.openide.util.NbBundle.getMessage(PantallaFormParadas.class, "PantallaFormParadas.jButtonAniadirParada.text")); // NOI18N
         jButtonAniadirParada.addActionListener(new java.awt.event.ActionListener() {
@@ -52,53 +89,25 @@ public class PantallaFormParadas extends javax.swing.JDialog {
                 jButtonAniadirParadaActionPerformed(evt);
             }
         });
-
-        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
-        getContentPane().setLayout(layout);
-        layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(82, 82, 82)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(jLabelNumParada)
-                            .addComponent(jLabelNombreParada))
-                        .addGap(18, 18, 18)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(jTextFieldNumParada, javax.swing.GroupLayout.DEFAULT_SIZE, 106, Short.MAX_VALUE)
-                            .addComponent(jTextFieldNombreParada)))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(159, 159, 159)
-                        .addComponent(jButtonAniadirParada)))
-                .addContainerGap(74, Short.MAX_VALUE))
-        );
-        layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGap(78, 78, 78)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabelNombreParada)
-                    .addComponent(jTextFieldNombreParada, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(24, 24, 24)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabelNumParada)
-                    .addComponent(jTextFieldNumParada, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(29, 29, 29)
-                .addComponent(jButtonAniadirParada)
-                .addContainerGap(97, Short.MAX_VALUE))
-        );
+        getContentPane().add(jButtonAniadirParada);
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButtonAniadirParadaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonAniadirParadaActionPerformed
-        String nombre = jTextFieldNombreParada.getText();
-        int num = Integer.parseInt(jTextFieldNumParada.getText());
-        Parada parada = new Parada(nombre, num);
-        setVisible(false);
-        logicaParadas.guardarParada(parada);
+        if(validarFormulario()){  //si se ha validado el formulario correctamente, se recogen los datos introducidos.
+            String nombre = jTextFieldNombreParada.getText();
+            int num = Integer.parseInt(jTextFieldNumParada.getText());
+            Parada parada = new Parada(nombre, num);
+            setVisible(false);
+            logicaParadas.guardarParada(parada);
+            JOptionPane.showMessageDialog(this, "La parada se ha registrado con éxito", "Parada registrada", JOptionPane.INFORMATION_MESSAGE);
+        }
     }//GEN-LAST:event_jButtonAniadirParadaActionPerformed
+
+    private void jTextFieldNombreParadaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextFieldNombreParadaActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jTextFieldNombreParadaActionPerformed
 
     /**
      * @param args the command line arguments
@@ -146,6 +155,7 @@ public class PantallaFormParadas extends javax.swing.JDialog {
     private javax.swing.JButton jButtonAniadirParada;
     private javax.swing.JLabel jLabelNombreParada;
     private javax.swing.JLabel jLabelNumParada;
+    private javax.swing.JPanel jPanel1;
     private javax.swing.JTextField jTextFieldNombreParada;
     private javax.swing.JTextField jTextFieldNumParada;
     // End of variables declaration//GEN-END:variables

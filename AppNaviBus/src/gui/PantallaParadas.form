@@ -6,7 +6,7 @@
       <SubComponents>
         <Menu class="javax.swing.JMenu" name="jMenuParadas">
           <Properties>
-            <Property name="text" type="java.lang.String" value="Paradas Cercanas"/>
+            <Property name="text" type="java.lang.String" value="Paradas"/>
           </Properties>
           <SubComponents>
             <MenuItem class="javax.swing.JMenuItem" name="jMenuItemA&#xf1;adirParada">
@@ -71,14 +71,27 @@
               <Group type="102" attributes="0">
                   <Group type="103" groupAlignment="0" attributes="0">
                       <Group type="102" attributes="0">
-                          <EmptySpace min="-2" pref="152" max="-2" attributes="0"/>
+                          <EmptySpace pref="152" max="32767" attributes="0"/>
                           <Component id="jScrollPane1" min="-2" pref="299" max="-2" attributes="0"/>
                       </Group>
                       <Group type="102" alignment="0" attributes="0">
+                          <EmptySpace min="-2" pref="228" max="-2" attributes="0"/>
+                          <Component id="jButtonCargar" min="-2" max="-2" attributes="0"/>
+                      </Group>
+                      <Group type="102" alignment="0" attributes="0">
                           <EmptySpace min="-2" pref="168" max="-2" attributes="0"/>
-                          <Component id="jTextFieldBuscador" min="-2" pref="183" max="-2" attributes="0"/>
-                          <EmptySpace max="-2" attributes="0"/>
-                          <Component id="jButtonBuscar" min="-2" pref="76" max="-2" attributes="0"/>
+                          <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                              <Group type="102" attributes="0">
+                                  <Component id="jButtonSeleccionada" min="-2" max="-2" attributes="0"/>
+                                  <EmptySpace type="separate" max="-2" attributes="0"/>
+                                  <Component id="jLabelSeleccionado" max="32767" attributes="0"/>
+                              </Group>
+                              <Group type="102" attributes="0">
+                                  <Component id="jTextFieldBuscador" min="-2" pref="183" max="-2" attributes="0"/>
+                                  <EmptySpace max="-2" attributes="0"/>
+                                  <Component id="jButtonBuscar" min="-2" pref="76" max="-2" attributes="0"/>
+                              </Group>
+                          </Group>
                       </Group>
                   </Group>
                   <EmptySpace pref="167" max="32767" attributes="0"/>
@@ -93,9 +106,16 @@
                       <Component id="jTextFieldBuscador" alignment="3" min="-2" max="-2" attributes="0"/>
                       <Component id="jButtonBuscar" alignment="3" min="-2" max="-2" attributes="0"/>
                   </Group>
-                  <EmptySpace min="-2" pref="35" max="-2" attributes="0"/>
-                  <Component id="jScrollPane1" min="-2" pref="293" max="-2" attributes="0"/>
-                  <EmptySpace pref="41" max="32767" attributes="0"/>
+                  <EmptySpace max="-2" attributes="0"/>
+                  <Group type="103" groupAlignment="0" attributes="0">
+                      <Component id="jButtonSeleccionada" min="-2" max="-2" attributes="0"/>
+                      <Component id="jLabelSeleccionado" min="-2" pref="23" max="-2" attributes="0"/>
+                  </Group>
+                  <EmptySpace pref="5" max="32767" attributes="0"/>
+                  <Component id="jScrollPane1" min="-2" pref="247" max="-2" attributes="0"/>
+                  <EmptySpace type="separate" max="32767" attributes="0"/>
+                  <Component id="jButtonCargar" min="-2" max="-2" attributes="0"/>
+                  <EmptySpace pref="45" max="32767" attributes="0"/>
               </Group>
           </Group>
         </DimensionLayout>
@@ -111,11 +131,9 @@
             <Component class="javax.swing.JTable" name="jTableParadas">
               <Properties>
                 <Property name="model" type="javax.swing.table.TableModel" editor="org.netbeans.modules.form.editors2.TableModelEditor">
-                  <Table columnCount="4" rowCount="4">
-                    <Column editable="true" title="Title 1" type="java.lang.Object"/>
-                    <Column editable="true" title="Title 2" type="java.lang.Object"/>
-                    <Column editable="true" title="Title 3" type="java.lang.Object"/>
-                    <Column editable="true" title="Title 4" type="java.lang.Object"/>
+                  <Table columnCount="2" rowCount="4">
+                    <Column editable="true" title="Parada" type="java.lang.Object"/>
+                    <Column editable="true" title="N&#xfa;mero de parada" type="java.lang.Object"/>
                   </Table>
                 </Property>
               </Properties>
@@ -131,6 +149,24 @@
           <Events>
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButtonBuscarActionPerformed"/>
           </Events>
+        </Component>
+        <Component class="javax.swing.JButton" name="jButtonCargar">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="Cargar paradas cercanas"/>
+          </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButtonCargarActionPerformed"/>
+          </Events>
+        </Component>
+        <Component class="javax.swing.JButton" name="jButtonSeleccionada">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="Parada seleccionada:"/>
+          </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButtonSeleccionadaActionPerformed"/>
+          </Events>
+        </Component>
+        <Component class="javax.swing.JLabel" name="jLabelSeleccionado">
         </Component>
       </SubComponents>
     </Container>

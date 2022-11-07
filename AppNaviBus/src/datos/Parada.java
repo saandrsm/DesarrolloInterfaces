@@ -9,9 +9,9 @@ package datos;
  * @author solet
  */
 public class Parada {
-    private String Nombre;
+    private String Nombre; //atributos
     private int NumParada;
-
+                            //getters y setters
     public int getNumParada() {
         return NumParada;
     }
@@ -27,7 +27,7 @@ public class Parada {
     public void setNombre(String Nombre) {
         this.Nombre = Nombre;
     }
-    
+                                //constructor
     public Parada(String Nombre, int NumParada){
         this.Nombre = Nombre;
         this.NumParada = NumParada;

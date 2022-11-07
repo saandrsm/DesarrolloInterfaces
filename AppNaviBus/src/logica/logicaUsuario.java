@@ -10,13 +10,18 @@ import java.util.List;
  * @author solet
  */
 public class logicaUsuario {
-    //private static List<Usuario> listaUsuarios = new ArrayList<>();
+    private static List<Usuario> listaUsuarios = new ArrayList<>();
     
     public static void guardarUsuario(Usuario usuario){
-        //listaUsuarios.add(usuario);
+        listaUsuarios.add(usuario);
+    }
+    
+    public static void borrarUsuario(int index){
+        listaUsuarios.remove(index);
     }
 
-    //public static List<Usuario> getListaUsuarios() {
-    //    return listaUsuarios;
-    //
+    public static List<Usuario> getListaUsuarios() {
+        return listaUsuarios;
+    
+}
 }

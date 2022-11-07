@@ -1,7 +1,4 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JDialog.java to edit this template
- */
+
 package gui;
 
 import datos.Usuario;
@@ -21,7 +18,6 @@ import org.netbeans.validation.api.ui.ValidationGroup;
  * @author solet
  */
 public class PantallaRegistro extends javax.swing.JDialog {
-    private static Usuario usuario;
     private PantallaPrincipal pantallaPrincipal;
     /**
      * Creates new form PantallaRegistro
@@ -31,14 +27,15 @@ public class PantallaRegistro extends javax.swing.JDialog {
         pantallaPrincipal = (PantallaPrincipal) parent;
         initComponents();
         jButtonRegistrarte.setEnabled(false);
-        ValidationGroup group = validationPanel.getValidationGroup();
+        //validador automático de mayúsculas y campos vacíos
+        ValidationGroup group = validationPanel.getValidationGroup(); 
         group.add(jTextFieldNombre, StringValidators.REQUIRE_NON_EMPTY_STRING, new MayusculasValidacion());
         group.add(jTextFieldApellido, StringValidators.REQUIRE_NON_EMPTY_STRING);
         
         validationPanel.addChangeListener(new ChangeListener() {
             @Override
             public void stateChanged(ChangeEvent e) {
-                if (validationPanel.getProblem()== null)
+                if (validationPanel.getProblem()== null) //si el validador no valida el formulario, deja incativo el botón para registrarse
                     jButtonRegistrarte.setEnabled(true);
                 else
                     jButtonRegistrarte.setEnabled(false);
@@ -167,37 +164,19 @@ public class PantallaRegistro extends javax.swing.JDialog {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButtonRegistrarteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonRegistrarteActionPerformed
-        String Nombre = jTextFieldNombre.getText();
+        String Nombre = jTextFieldNombre.getText();          //recojo los datos con getters para crear un nuevo usuario
         String Apellido = jTextFieldApellido.getText();
         String Provincia = (String)jComboBoxProvincias.getSelectedItem();
         String Genero = (String)jComboBoxGenero.getSelectedItem();
         Date FechaNac = (Date)jSpinnerFecha.getValue();
-        usuario = new Usuario(Nombre, Apellido, Provincia, Genero, FechaNac);
+        Usuario usuario = new Usuario(Nombre, Apellido, Provincia, Genero, FechaNac);
         logicaUsuario.guardarUsuario(usuario);
-        pantallaPrincipal.mostrarBoton();
-        setVisible(false);
+        pantallaPrincipal.mostrarBoton(); //una vez que tenemos un usuario registrado, utilizo el metodo mostrar boton para hacer invisible el 
+        setVisible(false);                //botón de registrarse y hacer visible el botón para ver los datos del usuario introducido.
+        pantallaPrincipal.establecerNombre(Nombre); 
     }//GEN-LAST:event_jButtonRegistrarteActionPerformed
 
-    public static String getNombre(){
-        String Nombre = usuario.getNombre();
-        return Nombre;
-    }
-    public static String getApellido(){
-        String Apellido = usuario.getApellido();
-        return Apellido;
-    }
-    public static Object getProvincia(){
-        Object Provincia = (Object)usuario.getProvincia();
-        return Provincia;
-    }
-    public static Object getGenero(){
-        Object Genero = (Object)usuario.getGenero();
-        return Genero;
-    }
-    public static Object getFecha(){
-        Object Fecha = (Object)usuario.getFechaNac();
-        return Fecha;
-    }
+  
     
     
     /**
